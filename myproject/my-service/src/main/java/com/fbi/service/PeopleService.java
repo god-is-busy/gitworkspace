@@ -1,8 +1,5 @@
 package com.fbi.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.fbi.domain.People;
-
 /**
  * <p>
  *  服务类
@@ -11,6 +8,8 @@ import com.fbi.domain.People;
  * @author Generator
  * @since 2023-02-25
  */
-public interface PeopleService extends IService<People> {
+public interface PeopleService  {
+
+    void create();
 
 }
