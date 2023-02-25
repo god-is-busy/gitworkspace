@@ -1,15 +1,21 @@
 package com.fbi;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.PackageConfig;
+import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class CodeGenerator {
 
@@ -21,7 +27,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");//获取当前的路径
         gc.setOutputDir(projectPath + "/src/main/java");//在当前路径上加上这个路径
-        gc.setAuthor("name");//添加作者信息
+        gc.setAuthor("Generator");//添加作者信息
         gc.setOpen(false);//是否打开资源管理器
         gc.setFileOverride(false);//是否覆盖文件
         gc.setServiceName("%sService");//去除服务接口service前缀
@@ -33,7 +39,7 @@ public class CodeGenerator {
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         //在这里需要改成你自己的数据库
-        dsc.setUrl("jdbc:mysql://192.168.2.199:3306/myproject?useUnicode=true&characterEncoding=utf8&useSSL=false");
+        dsc.setUrl("jdbc:mysql://192.168.2.199:3306/myproject");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");//用户名
         dsc.setPassword("123456");//密码
@@ -43,9 +49,9 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         //这里需要设置自己的包路径名
-        pc.setModuleName("generate");//设置模块名
-        pc.setParent("com");//设置包名，这样com.zjh.mybatis
-        pc.setEntity("entity");//设置实体类的包名
+        pc.setModuleName("");//设置模块名
+        pc.setParent("com.fbi");//设置包名，这样com.zjh.mybatis
+        pc.setEntity("domain");//设置实体类的包名
         pc.setMapper("mapper");//设置持久层的包名
         pc.setService("service");//设置业务层的包名
         pc.setController("controller");//设置表现层（控制层）的包名
@@ -53,13 +59,13 @@ public class CodeGenerator {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("leader_schedule_main");//设置要包含生成的表,生成多个表以逗号相隔,例如strategy.setInclude("表1","表2");
+        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));//设置要包含生成的表,生成多个表以逗号相隔,例如strategy.setInclude("表1","表2");
         strategy.setNaming(NamingStrategy.underline_to_camel);//设置驼峰命名的自动映射
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);//设置列名的驼峰命名自动映射
         strategy.setEntityLombokModel(true);//设置是否支持lombok
         strategy.setRestControllerStyle(true);
 
-        strategy.setLogicDeleteFieldName("deleted");//自动配置逻辑删除字段
+//        strategy.setLogicDeleteFieldName("deleted");//自动配置逻辑删除字段
         //自动填充配置
         TableFill gmtCreate = new TableFill("gmt_create", FieldFill.INSERT);
         TableFill gmtModified = new TableFill("gmt_modified", FieldFill.INSERT);
@@ -73,5 +79,19 @@ public class CodeGenerator {
         strategy.setControllerMappingHyphenStyle(true);//url多字段的/变成_下划线
         mpg.setStrategy(strategy);//把所有策略放入自动代码生成器中
         mpg.execute();//执行
+    }
+
+    public static String scanner(String tip) {
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder help = new StringBuilder();
+        help.append("请输入" + tip + "：");
+        System.out.println(help.toString());
+        if (scanner.hasNext()) {
+            String ipt = scanner.next();
+            if (StrUtil.isNotEmpty(ipt)) {
+                return ipt;
+            }
+        }
+        throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
 }
