@@ -1,5 +1,6 @@
 package com.fbi.controller;
 
+import com.fbi.domain.People;
 import com.fbi.service.PeopleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +16,18 @@ public class Demo {
 
     @GetMapping("/hello")
     public String hello() {
-        return "demo";
+        return "index";
     }
 
     @GetMapping("/create")
     @ResponseBody
     public void create() {
         peopleService.create();
+    }
+
+    @GetMapping("/query")
+    public String query(People people) {
+        People query = peopleService.query(people);
+        return "demo";
     }
 }

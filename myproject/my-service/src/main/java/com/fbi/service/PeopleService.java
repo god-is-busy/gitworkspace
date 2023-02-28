@@ -1,6 +1,6 @@
 package com.fbi.service;
 
-/**
+import com.fbi.domain.People; /**
  * <p>
  *  服务类
  * </p>
@@ -12,4 +12,5 @@ public interface PeopleService  {
 
     void create();
 
+    People query(People people);
 }

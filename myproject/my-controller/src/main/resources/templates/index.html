@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD首页</title>
+</head>
+<body>
+<h2>addUser-Test</h2>
+<form action="/query" method="get">
+    用户:<input name="pName" type="text"/>
+    <input name="submit" type="submit"/>
+</form>
+</br>
+<h2>getUser-Test</h2>
+<form action="/getUser" method="post">
+    用户名:<input name="userName" type="text"/>
+    <input name="submit" type="submit"/>
+</form>
+</br>
+<h2>deleteUser-Test</h2>
+<form action="/deleteUser" method="post">
+    <input name="_method" type="hidden" value="delete"/>
+    用户名：<input name="userName" type="text"/>
+    <input value="submit" type="submit"/>
+</form>
+</br>
+<h2>updateUser-Test</h2>
+<form action="/updateUser" method="post">
+    <input name="_method" type="hidden" value="put"/>
+    用户名：<input name="userName" type="text"/>
+    密码修改为：<input name="password" type="password">
+    <input value="submit" type="submit"/>
+</form>
+</br>
+<h2>文件上传-Test</h2>
+<form method="post" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="headerImg"></br>
+    <input type="submit" value="提交">
+</form>
+</br>
+</br>
+<h2>验证码-Test</h2>
+<img title = "验证码" src = "/verify" alt="#"/>
+</body>
+</html>
